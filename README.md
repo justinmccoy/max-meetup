@@ -2,7 +2,7 @@
 
 Ever wonder how AI is infused into applications, or how custom built AI can be deployed and consumed offline on the edge of a network or in the cloud? The following example showcases just how to accomplish this task. 
 
-We will create and deploy two different applications in docker containers. The first container will contain a deep learning model, wrapped by a Python Flask Web app exposing a REST API to make predictions using the deep learning model. The second container will host a NodeJS web application that utilizes the API hosted by the first container to create a web based photo manipulation tool backed by deep learning. The complete application will not call any external services, and can be run offline on the edges of a network.
+We will create and deploy two different applications in docker containers. The first container will contain a deep learning model, wrapped by a Python Flask Web app exposing a REST API to make predictions using the deep learning model. The second container will host a React web application that utilizes the API hosted by the first container to create a web based photo manipulation tool backed by deep learning. The complete application will not call any external services, and can be run offline on the edges of a network.
 
 ## Use-case
 Build an application that can run offline or in the cloud, utilizing a deep learning model to provide insights. We want to simplify the task of extracting objects from images utilizing _image segmentation_.
