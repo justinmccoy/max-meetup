@@ -10,15 +10,84 @@ Build an application that can run offline or in the cloud, utilizing a deep lear
 
 ## Prerequisites
 * `docker`: The [Docker](https://www.docker.com/) command-line iterface. Follow the [installations instructions](https://docs.docker.com/install/) for your system
-* (Optional) IBM Cloud CLI [Installation Instructions](https://console.bluemix.net/docs/cli/reference/ibmcloud/cli_docker.html#using-ibm-cloud-developer-tools-from-a-docker-container)
-* (Optional) IBM Cloud Kubernetes Service [Installation Instructions](https://cloud.ibm.com/containers-kubernetes/catalog/cluster)
+* [IBM Cloud Account](http://ibm.biz/cloudtaipei)
+* *(Optional)* [PromoCode for Free Kubernetes Clusters](https://ibm.biz/promo-code)
+* *(Optional)* IBM Cloud CLI [Installation Instructions](https://console.bluemix.net/docs/cli/reference/ibmcloud/cli_docker.html#using-ibm-cloud-developer-tools-from-a-docker-container)
+* *(Optional)* IBM Cloud Kubernetes Service [Installation Instructions](https://cloud.ibm.com/containers-kubernetes/catalog/cluster)
 
 ## Steps
-1. Finding or building the right deep learning model
+1. Deploy the Image Segmentation Model Web Applicationa nd API to IBM's Kubernetes Service
+2. Finding or building the right deep learning model
 3. Looking closely at the code
-2. Deploy the Image Segmentation Model API to IBM's Kubernetes Service
-4. Consuming the Image Segmentation API
-5. Start up the Image Segmentation Web Application
+5. Consuming the Image Segmentation API
+6. Start up the Image Segmentation Web Application
+
+### Deploy the Image Segmentation Model API to IBM's Kubernetes Service
+
+Clone this GitHub repository [https://github.com/justinmccoy/max-meetup](https://github.com/justinmccoy/max-meetup) provides instructions for deploying the deep learning model as a REST API on IBM's Kubernetes Service. But follow the following instructions from this repo to expose the API service on a constent NodePort port.
+
+** **Note you need a working [ibmcloud cli](https://console.bluemix.net/docs/cli/reference/ibmcloud/cli_docker.html#using-ibm-cloud-developer-tools-from-a-docker-container), and a [Kubernetes Cluster](https://cloud.ibm.com/containers-kubernetes/catalog/cluster) created**
+
+
+### [Create a new Kubernetes Cluster in US South Region](https://cloud.ibm.com/containers-kubernetes/catalog/cluster)
+
+Spin up the IBM CLI Development Docker Container:
+```sh
+# -v option below is mounting current directory to /workspace on container
+docker run -ti -v ./:/workspace ibmcom/ibm-cloud-developer-tools-amd64
+```
+
+Login into IBM Cloud account
+```sh
+# use --sso if logging onto account with Federated ID
+ibmcloud login
+```
+
+Setup to use the IBM South Region (Free Cluster Access):
+
+```sh
+ibmcloud ks region-set us-south
+```
+
+Download and export the kubectl configuration for interacting with your newly created cluster:
+
+```sh
+ibmcloud ks cluster-config YOUR_CLUSTER_NAME
+```
+
+List details about Kubernetes cluster, note the external IP address
+
+```sh
+ibmcloud ks workers --cluster YOUR_CLUSTER_NAME
+```
+
+Create a new deployment of the MAX-Image-Segmentation REST API
+
+```sh
+kubectl create -f max-image-segmenter.yaml
+```
+
+Show Kubernetes Deployments on cluster:
+
+```sh
+kubectl get deployments
+```
+
+Show Kubernetes Services on cluster
+
+```sh
+kubectl get services -o wide
+```
+
+Show details about Kubernetes service and deployment
+```sh
+kubectl describe deployment max-image-segmenter
+kubectl describe service max-image-segmenter
+```
+
+At this point you've deployed your the deep learning model's REST API and a React Web App to Kubernetes, and exposed it to the internet through the defined NodePorts of 30050 30030.  You can now reach the API at the external IP address noted above, at port 30050, or the web application at the external IP address at port 30030.
+
+For example my Web App is deployed to http://184.172.250.9:30030
 
 
 ### Finding or building the right deep learning model
@@ -83,73 +152,6 @@ Let's dig into the code a bit:
 * How is the model being loaded?
 * How do you call the model?
 
-### Deploy the Image Segmentation Model API to IBM's Kubernetes Service
-
-The [repository we cloned above](https://github.com/IBM/MAX-Image-Segmenter) provides instructions for deploying the deep learning model as a REST API on IBM's Kubernetes Service. But follow the following instructions from this repo to expose the API service on a constent NodePort port.
-
-** **Note you need a working [ibmcloud cli](https://console.bluemix.net/docs/cli/reference/ibmcloud/cli_docker.html#using-ibm-cloud-developer-tools-from-a-docker-container), and a [Kubernetes Cluster](https://cloud.ibm.com/containers-kubernetes/catalog/cluster) created**
-
-
-[Create a new Kubernetes Cluster in US South Region](https://cloud.ibm.com/containers-kubernetes/catalog/cluster)
-
-Spin up the IBM CLI Development Docker Container:
-```sh
-# -v option below is mounting current directory to /workspace on container
-docker run -ti -v ./:/workspace ibmcom/ibm-cloud-developer-tools-amd64
-```
-
-Login into IBM Cloud account
-```sh
-# use --sso if logging onto account with Federated ID
-ibmcloud login
-```
-
-Setup to use the IBM South Region (Free Cluster Access):
-
-```sh
-ibmcloud ks region-set us-south
-```
-
-Download and export the kubectl configuration for interacting with your newly created cluster:
-
-```sh
-ibmcloud ks cluster-config YOUR_CLUSTER_NAME
-```
-
-List details about Kubernetes cluster, note the external IP address
-
-```sh
-ibmcloud ks workers --cluster YOUR_CLUSTER_NAME
-```
-
-Create a new deployment of the MAX-Image-Segmentation REST API
-
-```sh
-kubectl create -f max-image-segmenter.yaml
-```
-
-Show Kubernetes Deployments on cluster:
-
-```sh
-kubectl get deployments
-```
-
-Show Kubernetes Services on cluster
-
-```sh
-kubectl get services -o wide
-```
-
-Show details about Kubernetes service and deployment
-```sh
-kubectl describe deployment max-image-segmenter
-kubectl describe service max-image-segmenter
-```
-
-At this point you've deployed your the deep learning model's REST API to Kubernetes, and exposed it to the internet through the defined NodePort of 30050.  You can now reach the API at the external IP address noted above, at port 30050.
-
-For example my API is deployed to http://184.172.250.9:30050
-
 
 ### Consuming the Image Segmentation API
 
@@ -181,11 +183,18 @@ Open up your browser and go to http://localhost:3000
 
 
 
-
-
 ## License
 
 | Component | License | Link  |
 | ------------- | --------  | -------- |
 | This repository | [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0) | [LICENSE](LICENSE) |
 
+
+## Additional Resources
+* [Call For Code 2019](docs/Callforcode2019.pptx)
+* [IBM Cloud](http://ibm.biz/cloudtaipei)
+* [Request IBM Cloud Promo Code](https://ibm.biz/promo-code)
+* [MAX Model Exchange](https://developer.ibm.com/exchanges/models/)
+* [Cloud Kubernetes Service](https://cloud.ibm.com/containers-kubernetes/catalog/cluster)
+* [Free code on IBM Developer](https://developer.ibm.com)
+* [Dockerhub](https://hub.docker.com/)

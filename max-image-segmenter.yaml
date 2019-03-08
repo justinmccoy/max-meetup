@@ -9,6 +9,9 @@ spec:
   - name: api
     port: 5000
     nodePort: 30050
+  - name: web
+    port: 3000
+    nodePort: 30030
   type: NodePort
 ---
 apiVersion: extensions/v1beta1
@@ -35,3 +38,16 @@ spec:
         env:
         - name: CORS_ENABLE
           value: "true"
+      - name: max-image-segmenter-web
+        image: kastentx/kube-imgseg-app
+        ports:
+        - containerPort: 3000
+        env:
+        - name: CORS_ENABLE
+          value: "true"
+        - name: REACT_APP_KUBE_MODEL_PORT
+          value: "30050"
+        - name: REACT_APP_KUBE_IP
+          value: "184.172.250.9"
+        - name: REACT_APP_DEPLOY_TYPE
+          value: "KUBE"
