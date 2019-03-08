@@ -16,7 +16,7 @@ Build an application that can run offline or in the cloud, utilizing a deep lear
 * *(Optional)* IBM Cloud Kubernetes Service [Installation Instructions](https://cloud.ibm.com/containers-kubernetes/catalog/cluster)
 
 ## Steps
-1. Deploy the Image Segmentation Model Web Applicationa nd API to IBM's Kubernetes Service
+1. Deploy the Image Segmentation Model Web Application and API to IBM's Kubernetes Service
 2. Finding or building the right deep learning model
 3. Looking closely at the code
 5. Consuming the Image Segmentation API
@@ -24,7 +24,12 @@ Build an application that can run offline or in the cloud, utilizing a deep lear
 
 ### Deploy the Image Segmentation Model API to IBM's Kubernetes Service
 
-Clone this GitHub repository [https://github.com/justinmccoy/max-meetup](https://github.com/justinmccoy/max-meetup) provides instructions for deploying the deep learning model as a REST API on IBM's Kubernetes Service. But follow the following instructions from this repo to expose the API service on a constent NodePort port.
+Clone this GitHub repository [https://github.com/justinmccoy/max-meetup](https://github.com/justinmccoy/max-meetup) provides instructions yaml file for deploying the deep learning model as a REST API and web application on IBM's Kubernetes Service. 
+```sh
+git clone https://github.com/justinmccoy/max-meetup
+cd max-meetup
+```
+
 
 ** **Note you need a working [ibmcloud cli](https://console.bluemix.net/docs/cli/reference/ibmcloud/cli_docker.html#using-ibm-cloud-developer-tools-from-a-docker-container), and a [Kubernetes Cluster](https://cloud.ibm.com/containers-kubernetes/catalog/cluster) created**
 
@@ -101,6 +106,12 @@ Building a new machine learning model or deep learning model is a big undertakin
 
 
 [Image Segmentation Model](https://developer.ibm.com/exchanges/models/all/max-image-segmenter/)
+
+**Clone the models GitHub repo**
+```sh
+git clone https://github.com/IBM/MAX-Image-Segmenter
+cd MAX-Image-Segmenter
+```
 
 This Image Segmenation model has been trained on 20 different objects.
 
