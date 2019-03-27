@@ -1,28 +1,28 @@
 # Deploy, and Consume a Deep Learning Model
 
-Ever wonder how AI is infused into applications, or how custom built AI can be deployed and consumed offline on the edge of a network or in the cloud? The following example showcases just how to accomplish this task. 
+Ever wonder how AI is infused into applications, or how custom built AI can be deployed and consumed offline on the edge of a network or in the Cloud? The following example showcases just how to accomplish this task. 
 
 We will create and deploy two different applications in docker containers. The first container will contain a deep learning model, wrapped by a Python Flask Web app exposing a REST API to make predictions using the deep learning model. The second container will host a React web application that utilizes the API hosted by the first container to create a web based photo manipulation tool backed by deep learning. The complete application will not call any external services, and can be run offline on the edges of a network.
 
 ## Use-case
-Build an application that can run offline or in the cloud, utilizing a deep learning model to provide insights. We want to simplify the task of extracting objects from images utilizing _image segmentation_.
+Build an application that can run offline or in the cloud, utilizing a deep learning model to provide insights. We want to simplify the task of extracting objects from images utilizing _[image segmentation](https://en.wikipedia.org/wiki/Image_segmentation)_.
 
 
 ## Prerequisites
-* `docker`: The [Docker](https://www.docker.com/) command-line iterface. Follow the [installations instructions](https://docs.docker.com/install/) for your system
-* [IBM Cloud Account](http://ibm.biz/cloudtaipei)
-* *(Optional)* [PromoCode for Free Kubernetes Clusters](https://ibm.biz/promo-code)
+* `docker`: The [Docker](https://www.docker.com/) command-line iterface. Follow the [installations instructions](https://docs.docker.com/install/) for your system. or use [PlayWithDocker](https://labs.play-with-docker.com/) online
+* [IBM Cloud Account](https://cloud.ibm.com)
+* *(Optional)* [Promo Code for Free Kubernetes Clusters](https://ibm.biz/promo-code)
 * *(Optional)* IBM Cloud CLI [Installation Instructions](https://console.bluemix.net/docs/cli/reference/ibmcloud/cli_docker.html#using-ibm-cloud-developer-tools-from-a-docker-container)
-* *(Optional)* IBM Cloud Kubernetes Service [Installation Instructions](https://cloud.ibm.com/containers-kubernetes/catalog/cluster)
+* *(Optional)* IBM Cloud Kubernetes Service [Installation Instructions](https://cdeploymentloud.ibm.com/containers-kubernetes/catalog/cluster)
 
 ## Steps
-1. Deploy the Image Segmentation Model Web Application and API to IBM's Kubernetes Service
-2. Finding or building the right deep learning model
-3. Looking closely at the code
-5. Consuming the Image Segmentation API
-6. Start up the Image Segmentation Web Application
+1. [Deploy the Image Segmentation Model Web Application and API to IBM's Kubernetes Service](#1-deploy-the-image-segmentation-model-api-to-ibms-kubernetes-service)
+2. [Finding or building the right deep learning model](#2-finding-or-building-the-right-deep-learning-model)
+3. [Looking closely at the code](#3-looking-closely-at-the-code)
+4. [Consuming the Image Segmentation API](#4-consuming-the-image-segmentation-api)
+5. [Start up the Image Segmentation Web Application](#5-start-up-the-image-segmentation-web-application)
 
-### Deploy the Image Segmentation Model API to IBM's Kubernetes Service
+### 1. Deploy the Image Segmentation Model API to IBM's Kubernetes Service
 
 Clone this GitHub repository [https://github.com/justinmccoy/max-meetup](https://github.com/justinmccoy/max-meetup) provides instructions yaml file for deploying the deep learning model as a REST API and web application on IBM's Kubernetes Service. 
 ```sh
@@ -95,7 +95,7 @@ At this point you've deployed your the deep learning model's REST API and a Reac
 For example my Web App is deployed to http://184.172.250.9:30030
 
 
-### Finding or building the right deep learning model
+### 2. Finding or building the right deep learning model
 Before we can enable an application with insights from a machine learning model we first must figure out what we want to accomplish, find a model, or build one for ourselves. 
 
 There are several different common usecases, including Image Classification, Image Segmentation, Object Detection, Generative Models, etc.
